@@ -26,7 +26,7 @@ public class Server {
         try {
             ss = new ServerSocket(8080);
 
-            System.out.println("Server kører...");
+            System.out.println("Server is Running...");
 
             while (true) {
                 // Så længe der ikke er oprettet en forbindelse, venter serveren her
@@ -52,22 +52,22 @@ public class Server {
                     linier, afventer den til der kommer en.
                     */
                     String kommando = in.nextLine();
-                    if (kommando.equals("luk ned")) {
+                    if (kommando.equals("CLOSE")) {
                         done = true;
                     } else {
                         // Når vi skriver, sender vi en linie med PrintWriter
                          out.println(kommando); // svar til clienten
                         String kommandoType =  beskedFortolker(kommando);
-                        System.out.println("Modtog besked " + kommandoType);
+                        System.out.println("Recieved Char Sequence " + kommandoType);
                         if (kommandoType=="NAME"){
                             name = new String(kommando.getBytes()).replace("NAME:", "");
-                            System.out.println("Navn er ændret til " + name);
+                            System.out.println("Name Changed to: " + name);
                         }
                         if (kommandoType=="PUT"){
                             besked =  new String(kommando.getBytes()).replace("PUT: ", "");
-                            String beskedDerGemmes = name + " skriver " + besked;
+                            String beskedDerGemmes = name + " wrote " + besked;
                             array.add(beskedDerGemmes);
-                            System.out.println(array.get(0) + " er tilføjet til arrayet. ");
+                            System.out.println(array.get(0) + "\n"+"Sentence is added to the array. ");
                         }
                         if (kommandoType== "COUNT") {
                             int count = array.size();
